@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>云桥优选 | 商品展示</title>
+  <title>HY 数字服务商城 | 商品展示</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div>
-      <p class="eyebrow">PRIVATE SHOP</p>
-      <h1>云桥优选商品站</h1>
-      <p class="sub">上架商品、接待咨询、收集订单，并支持微信支付和支付宝付款方式。正式部署时可配置访问密码、VPN 或 IP 白名单。</p>
+      <p class="eyebrow">HY SERVICE</p>
+      <h1>HY 数字服务商城</h1>
+      <p class="sub">在线选择套餐、提交订单、扫码付款，客服会在付款后协助开通和配置。</p>
     </div>
     <nav>
-      <a href="./index.html">商品</a>
+      <a href="./index.html">套餐</a>
       <button type="button" id="viewOrdersButton" class="nav-button">查看订单</button>
       <a href="./admin.html">后台管理</a>
     </nav>
@@ -23,18 +23,18 @@
   <main>
     <section class="hero">
       <div>
-        <p class="eyebrow" id="heroEyebrowText">精选上新</p>
-        <h2 id="heroTitleText">商品展示、顾客咨询和付款下单放在一个页面里。</h2>
-        <p id="heroBodyText">顾客可以浏览商品、选择微信或支付宝提交订单，也可以通过右下角聊天入口咨询客服。</p>
+        <p class="eyebrow" id="heroEyebrowText">HY SERVICE</p>
+        <h2 id="heroTitleText">加速套餐、付款下单和客服确认都在一个页面完成。</h2>
+        <p id="heroBodyText">选择合适套餐后提交订单，付款完成请联系右下角客服确认开通。</p>
       </div>
       <div class="hero-card">
-        <span id="heroCountLabelText">今日可售商品</span>
+        <span id="heroCountLabelText">可选套餐</span>
         <strong id="productCount">0</strong>
       </div>
     </section>
 
     <section class="toolbar">
-      <input id="searchInput" type="search" placeholder="搜索商品名称、分类或描述" />
+      <input id="searchInput" type="search" placeholder="搜索套餐名称、分类或描述" />
       <select id="categoryFilter">
         <option value="">全部分类</option>
       </select>
@@ -54,11 +54,8 @@
       </div>
 
       <div class="order-summary" id="orderSummary"></div>
-
       <div class="payment-options" id="paymentOptions"></div>
-
       <div id="checkoutFields" class="checkout-fields"></div>
-
       <div class="payment-tip" id="paymentTip"></div>
 
       <div class="form-actions">

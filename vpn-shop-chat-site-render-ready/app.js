@@ -9,35 +9,38 @@
   siteSettings: "vpn_shop_site_settings",
   adminPassword: "vpn_shop_admin_password",
   admin: "vpn_shop_admin_session",
+  contentVersion: "vpn_shop_content_version",
 };
+
+const CONTENT_VERSION = "hy-digital-shop-2026-05-28";
 
 const seedProducts = [
   {
-    id: crypto.randomUUID(),
-    name: "轻奢商务背包",
-    category: "箱包",
-    price: "299",
-    stock: 36,
+    id: "hy-month-plan",
+    name: "基础加速月卡",
+    category: "加速套餐",
+    price: "68",
+    stock: 999,
     image: "",
-    description: "防泼水面料，多层收纳，适合通勤和短途出差。",
+    description: "适合短期体验和轻量使用，付款后联系客服开通。",
   },
   {
-    id: crypto.randomUUID(),
-    name: "无线降噪耳机",
-    category: "数码",
-    price: "399",
-    stock: 58,
-    image: "",
-    description: "长续航、低延迟，适合办公、学习和旅行。",
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "手作香薰礼盒",
-    category: "生活",
+    id: "hy-season-plan",
+    name: "稳定加速季卡",
+    category: "加速套餐",
     price: "168",
-    stock: 22,
+    stock: 999,
     image: "",
-    description: "木质香调，适合作为节日礼物和居家氛围用品。",
+    description: "适合长期使用，价格更划算，支持微信或支付宝付款。",
+  },
+  {
+    id: "hy-year-plan",
+    name: "尊享加速年卡",
+    category: "加速套餐",
+    price: "598",
+    stock: 999,
+    image: "",
+    description: "一年有效，适合稳定长期使用，下单后客服协助配置。",
   },
 ];
 
@@ -49,12 +52,12 @@ const DEFAULT_PAYMENT_SETTINGS = {
 };
 
 const DEFAULT_SITE_SETTINGS = {
-  siteName: "云桥优选商品站",
-  siteSubtitle: "上架商品、接待咨询、收集订单，并支持微信支付和支付宝付款方式。正式部署时可配置访问密码、VPN 或 IP 白名单。",
-  heroEyebrow: "精选上新",
-  heroTitle: "商品展示、顾客咨询和付款下单放在一个页面里。",
-  heroText: "顾客可以浏览商品、选择微信或支付宝提交订单，也可以通过右下角聊天入口咨询客服。",
-  heroCountLabel: "今日可售商品",
+  siteName: "HY 数字服务商城",
+  siteSubtitle: "在线选择套餐、提交订单、扫码付款，客服会在付款后协助开通和配置。",
+  heroEyebrow: "HY SERVICE",
+  heroTitle: "加速套餐、付款下单和客服确认都在一个页面完成。",
+  heroText: "选择合适套餐后提交订单，付款完成请联系右下角客服确认开通。",
+  heroCountLabel: "可选套餐",
 };
 
 const DEFAULT_CHECKOUT_FIELDS = [
@@ -91,6 +94,7 @@ const SYNC_KEYS = [
   STORE_KEYS.categories,
   STORE_KEYS.siteSettings,
   STORE_KEYS.adminPassword,
+  STORE_KEYS.contentVersion,
   "vpn_shop_customer_name",
 ];
 
@@ -172,6 +176,20 @@ function loadProducts() {
 
 function saveProducts(products) {
   writeJSON(STORE_KEYS.products, products);
+}
+
+function installCurrentDefaultContent() {
+  writeJSON(STORE_KEYS.products, seedProducts);
+  writeJSON(STORE_KEYS.siteSettings, DEFAULT_SITE_SETTINGS);
+  writeJSON(STORE_KEYS.categories, ["加速套餐"]);
+  writeJSON(STORE_KEYS.analytics, { siteViews: 0, productViews: {} });
+  localStorage.setItem(STORE_KEYS.contentVersion, CONTENT_VERSION);
+  syncStoreToServer();
+}
+
+function migrateDefaultContent() {
+  if (localStorage.getItem(STORE_KEYS.contentVersion) === CONTENT_VERSION) return;
+  installCurrentDefaultContent();
 }
 
 function loadMessages() {
@@ -1301,6 +1319,7 @@ function initAdminPage() {
 }
 
 hydrateStoreFromServer().finally(() => {
+  migrateDefaultContent();
   initFrontPage();
   initAdminPage();
 });
