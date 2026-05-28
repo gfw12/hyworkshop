@@ -1,0 +1,15 @@
+[Unit]
+Description=Private Shop Static Site
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/private-shop
+Environment=PORT=8080
+Environment=SITE_PASSWORD=change-this-password
+ExecStart=/usr/bin/node /opt/private-shop/server.js
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

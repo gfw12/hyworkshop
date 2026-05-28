@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>云桥优选 | 后台管理</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">ADMIN PANEL</p>
+      <h1>商品、订单与咨询后台</h1>
+    </div>
+    <nav>
+      <a href="./index.html">商品前台</a>
+      <a href="./admin.html">后台管理</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="loginBox" class="login-box">
+      <h2>后台登录</h2>
+      <p>请输入管理密码。</p>
+      <form id="loginForm">
+        <input id="adminPassword" type="password" placeholder="管理密码" required />
+        <button type="submit">进入后台</button>
+      </form>
+    </section>
+
+    <section id="adminApp" class="admin-layout hidden">
+      <div class="panel wide">
+        <h2>经营概览</h2>
+        <div id="adminStats" class="stats-grid"></div>
+      </div>
+
+      <div class="panel wide">
+        <h2>网站名称设置</h2>
+        <form id="siteSettingsForm" class="site-settings">
+          <label>网站名称<input id="siteName" required placeholder="例如：云桥优选商品站" /></label>
+          <label>首页说明<textarea id="siteSubtitle" rows="3" placeholder="显示在首页标题下方的说明文字"></textarea></label>
+          <label>首页小标签<input id="heroEyebrow" placeholder="例如：精选上新" /></label>
+          <label>首页大标题<textarea id="heroTitle" rows="3" placeholder="显示在首页中间的大标题"></textarea></label>
+          <label>首页大标题说明<textarea id="heroText" rows="3" placeholder="显示在首页大标题下面的说明"></textarea></label>
+          <label>右侧统计标题<input id="heroCountLabel" placeholder="例如：今日可售商品" /></label>
+          <button type="submit">保存网站名称</button>
+        </form>
+      </div>
+
+      <div class="panel wide">
+        <h2>后台密码设置</h2>
+        <form id="adminPasswordForm" class="password-settings">
+          <label>当前密码<input id="currentAdminPassword" type="password" required /></label>
+          <label>新密码<input id="newAdminPassword" type="password" required /></label>
+          <label>确认新密码<input id="confirmAdminPassword" type="password" required /></label>
+          <button type="submit">保存后台密码</button>
+        </form>
+      </div>
+
+      <div class="panel wide">
+        <h2>收款码设置</h2>
+        <form id="paymentSettingsForm" class="payment-settings">
+          <input id="wechatQr" type="hidden" />
+          <input id="alipayQr" type="hidden" />
+          <fieldset class="payment-method-settings">
+            <legend>选择添加支付方式</legend>
+            <label class="inline-check"><input id="enableWechatPayment" type="checkbox" checked /> 微信收款</label>
+            <label class="inline-check"><input id="enableAlipayPayment" type="checkbox" checked /> 支付宝收款</label>
+          </fieldset>
+          <label>上传微信收款码<input id="wechatQrUpload" type="file" accept="image/*" /></label>
+          <div id="wechatQrPreview" class="image-preview">当前使用默认微信收款码</div>
+          <label>上传支付宝收款码<input id="alipayQrUpload" type="file" accept="image/*" /></label>
+          <div id="alipayQrPreview" class="image-preview">当前使用默认支付宝收款码</div>
+          <div class="form-actions">
+            <button type="submit">保存收款码</button>
+            <button type="button" id="resetPaymentSettings" class="ghost">清空收款码</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel wide">
+        <h2>下单信息字段设置</h2>
+        <div id="checkoutFieldList" class="field-config-list"></div>
+        <form id="checkoutFieldForm" class="field-config-form">
+          <input id="fieldLabel" placeholder="字段名称，例如：姓名/称呼" required />
+          <input id="fieldPlaceholder" placeholder="输入提示，例如：请输入称呼" />
+          <select id="fieldType">
+            <option value="text">单行文本</option>
+            <option value="number">数字</option>
+            <option value="textarea">多行文本</option>
+          </select>
+          <label class="inline-check"><input id="fieldRequired" type="checkbox" checked /> 必填</label>
+          <button type="submit">添加字段</button>
+          <button type="button" id="resetCheckoutFields" class="ghost">恢复默认字段</button>
+        </form>
+      </div>
+
+      <div class="panel wide">
+        <h2>商品分类设置</h2>
+        <div id="categoryManager" class="category-manager"></div>
+        <form id="categoryForm" class="category-form">
+          <input id="newCategory" placeholder="输入新分类，例如：会员充值" required />
+          <button type="submit">添加分类</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2>添加 / 编辑商品</h2>
+        <form id="productForm" class="product-form">
+          <input type="hidden" id="productId" />
+          <input type="hidden" id="image" />
+          <label>商品名称<input id="name" required /></label>
+          <label>分类<input id="category" list="categoryOptions" required /></label>
+          <datalist id="categoryOptions"></datalist>
+          <label>价格<input id="price" required placeholder="例如：299" /></label>
+          <label>上传商品照片<input id="imageUpload" type="file" accept="image/*" /></label>
+          <div id="imagePreview" class="image-preview">暂无商品照片</div>
+          <label>库存<input id="stock" type="number" min="0" value="99" /></label>
+          <label>商品描述<textarea id="description" rows="4" required></textarea></label>
+          <div class="form-actions">
+            <button type="submit">添加商品</button>
+            <button type="button" id="resetForm" class="ghost">清空</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2>已上架商品</h2>
+        <div id="adminProducts" class="admin-list"></div>
+      </div>
+
+      <div class="panel wide">
+        <h2>订单与流水</h2>
+        <div id="adminOrders" class="message-list"></div>
+        <button id="clearOrders" class="ghost danger">清空订单记录</button>
+      </div>
+
+      <div class="panel wide">
+        <h2>顾客聊天窗口</h2>
+        <div id="adminMessages" class="message-list"></div>
+        <form id="adminChatForm" class="admin-chat-form">
+          <label>回复对象
+            <select id="replyCustomer">
+              <option value="">全部顾客</option>
+            </select>
+          </label>
+          <label>客服回复
+            <input id="adminReplyText" placeholder="输入要回复顾客的内容" required />
+          </label>
+          <button type="submit">发送回复</button>
+        </form>
+        <button id="clearMessages" class="ghost danger">清空聊天记录</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
